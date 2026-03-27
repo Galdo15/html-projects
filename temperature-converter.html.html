@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+       ---- Jose E Alvarez Luna ----
+       ---- 26/marzo/2026 ----
+    -->
+
+    <title>Conversion de Temperatura</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #d4f7db;
+            text-align: center;
+        }
+
+        h2 {
+            color: black;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 250px;
+        }
+
+        #btnConvertir {
+            padding: 10px;
+            margin: 10px;
+            background-color: lightblue;
+            border: 3px solid black;
+        }
+
+        #resultado {
+            margin: 20px auto;
+            font-weight: bold;
+            font-size: 20px;
+            color: blue;
+        }
+
+        #imagen {
+            font-size: 100px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Conversion de Temperatura</h2>
+
+    <form>
+        <!-- Campo de entrada -->
+        <p>Ingrese la temperatura: <input type="number" id="txtTemperatura" placeholder="Ingrese temperatura"></p>
+
+        <!-- Radio buttons -->
+        <p>
+            <input type="radio" name="opcion" id="CF" value="CF">
+            Celsius a Fahrenheit
+            <input type="radio" name="opcion" id="FC" value="FC">
+            Fahrenheit a Celsius
+        </p>
+
+        <!-- Boton Convertir -->
+        <button type="button" id="btnConvertir">Convertir</button>
+    </form>
+
+    <!-- Resultado -->
+    <p id="resultado"></p>
+
+    <!-- Imagen -->
+    <p id="imagen"></p>
+
+    <article>
+        <script>
+
+            // Funcion para convertir temperatura
+            function convertirTemperatura() {
+
+                var temperatura = document.getElementById("txtTemperatura").value;
+                var opcion = document.querySelector("input[name='opcion']:checked");
+
+                // Validar campo vacio o que no sea numero
+                if (temperatura === "" || isNaN(temperatura)) {
+                    alert("Ingrese un numero valido");
+                    return;
+                }
+
+                // Validar que se haya seleccionado una opcion
+                if (!opcion) {
+                    alert("Seleccione una opcion de conversion");
+                    return;
+                }
+
+                // Aplicar formula segun la opcion seleccionada
+                var resultado;
+                var resultadoNumero;
+
+                if (opcion.value === "CF") {
+                    // Celsius a Fahrenheit
+                    var degC = Number(temperatura);
+                    var degF = (degC * 9/5) + 32;
+                    resultadoNumero = degF;
+                    resultado = "Resultado: " + degF.toFixed(2) + " °F";
+                } else {
+                    // Fahrenheit a Celsius
+                    var degF = Number(temperatura);
+                    var degC = (degF - 32) * 5/9;
+                    resultadoNumero = degC;
+                    resultado = "Resultado: " + degC.toFixed(2) + " °C";
+                }
+
+                // Mostrar resultado
+                document.getElementById("resultado").innerHTML = resultado;
+
+                // Emoji
+                if (resultadoNumero < 15) {
+                    document.getElementById("imagen").innerHTML = "❄️";
+                } else {
+                    document.getElementById("imagen").innerHTML = "☀️";
+                }
+            }
+
+            // Asignar evento al boton
+            document.getElementById("btnConvertir")
+                .addEventListener("click", convertirTemperatura);
+
+        </script>
+    </article>
+
+</body>
+
+</html>

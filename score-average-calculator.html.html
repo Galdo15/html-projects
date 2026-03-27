@@ -1,0 +1,182 @@
+<html>
+
+<head>
+    <!--
+       ---- Jose E Alvarez Luna ----
+       ---- 26/marzo/2026 ----
+    -->
+
+    <title>Tarea 3-1</title>
+
+    <style>
+ body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 250px;
+        }
+
+        #btnAgregar {
+            padding: 10px;
+            margin: 5px;
+            background-color: yellow;
+            color: black;
+            border: 2px solid black;
+        }
+
+        #btnCalcular {
+            padding: 10px;
+            margin: 5px;
+            background-color: red;
+            color: white;
+            border: 2px solid black;
+        }
+
+        #resultados {
+            margin: 20px auto;
+            font-weight: bold;
+            background-color: rgb(160, 158, 158);
+            padding: 15px;
+            border: 3px solid black;
+            width: 300px;
+        }
+
+    </style>
+
+    <script>
+
+        // Variable global
+        var puntuaciones = [];
+
+        // Funcion para agregar puntuacion
+        function agregarPuntuacion() {
+
+            var valor = document.getElementById("txtPuntuacion").value;
+
+            // Validar campo vacio
+            if (valor === "" || isNaN(valor)) {
+                alert("Ingrese un numero valido");
+                return;
+            }
+
+            // Validar que no pasen de 5
+            if (puntuaciones.length >= 5) {
+                alert("Ya ingresaste las 5 puntuaciones");
+                return;
+            }
+
+            // Agregar puntuaciones
+            puntuaciones.push(Number(valor));
+
+            // Mostrar cuantas faltan
+            var faltan = 5 - puntuaciones.length;
+
+            // Cuando llega a 5 cambia el mensaje
+            if (puntuaciones.length === 5) {
+                document.getElementById("mensaje").innerHTML = "Presione boton de CALCULAR PROMEDIO";
+            } else {
+                document.getElementById("mensaje").innerHTML = "Faltan " + faltan + " puntuaciones";
+            }
+
+            // Mostrar las puntuaciones con for
+          var texto = "";
+            for (var i = 0; i < puntuaciones.length; i++) {
+                texto += "Actividad " + (i + 1) + ": " + puntuaciones[i] + "<br>";
+            }
+            document.getElementById("resultados").innerHTML = texto;
+
+            // Limpiar el campo de puntuacion
+            document.getElementById("txtPuntuacion").value = "";
+        }
+
+        // Funcion para calcular promedio
+        function calcularPromedio() {
+
+            var nombre = document.getElementById("txtNombre").value;
+
+            // Validar que esten las 5 puntuaciones
+            if (puntuaciones.length < 5) {
+                alert("Debe ingresar las 5 puntuaciones primero");
+                return;
+            }
+
+            // Sumar todas las puntuaciones con for
+            var texto = "";
+            var suma = 0;
+            for (var i = 0; i < puntuaciones.length; i++) {
+                texto += "Actividad " + (i + 1) + ": " + puntuaciones[i] + "<br>";
+                suma = suma + puntuaciones[i];
+            }
+
+            // Calcular promedio
+            var promedio = suma / puntuaciones.length;
+
+            // Mostrar promedio con el nombre
+            document.getElementById("resultados").innerHTML +=
+                "<br><strong>El promedio de " + nombre + " es de: " + promedio + "</strong>";
+
+            // Limpiar mensaje
+            document.getElementById("mensaje").innerHTML = "";
+        }
+
+        // Funcion que inicia la aplicacion
+        function iniciarAplicacion() {
+
+            // Asignar evento al boton Agregar
+            var btnAgregar = document.getElementById("btnAgregar");
+            if (btnAgregar.addEventListener) {
+                btnAgregar.addEventListener("click", agregarPuntuacion, false);
+            } else if (btnAgregar.attachEvent) {
+                btnAgregar.attachEvent("onclick", agregarPuntuacion);
+            }
+
+            // Asignar evento al boton Calcular
+            var btnCalcular = document.getElementById("btnCalcular");
+            if (btnCalcular.addEventListener) {
+                btnCalcular.addEventListener("click", calcularPromedio, false);
+            } else if (btnCalcular.attachEvent) {
+                btnCalcular.attachEvent("onclick", calcularPromedio);
+            }
+        }
+
+        // Eventos de la ventana
+        if (window.addEventListener) {
+            window.addEventListener("load", iniciarAplicacion, false);
+        } else if (window.attachEvent) {
+            window.attachEvent("onload", iniciarAplicacion);
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <h2>Registro de Puntuaciones</h2>
+
+    <form>
+        <!-- Campo de nombre -->
+        <p>Ingrese nombre del estudiante: <input type="text" id="txtNombre"></p>
+
+        <!-- Campo de puntuacion -->
+        <p>Ingrese puntuacion del estudiante: <input type="text" id="txtPuntuacion"></p>
+
+        <!-- Botones -->
+        <button type="button" id="btnAgregar">Agregar Puntuacion</button>
+        <button type="button" id="btnCalcular">Calcular Promedio</button>
+    </form>
+
+    <!-- Mensaje de estado -->
+    <p id="mensaje">Faltan 5 puntuaciones</p>
+
+    <!-- Resultados -->
+    <div id="resultados"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <!--
+         Jose E Alvarez Luna
+         22/marzo/2026
+        Tarea 2.2
+    -->
+
+    <style>
+        h1 { color: rgb(93, 208, 243); }
+        table { border-collapse: collapse; width: 10%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: rgb(116, 235, 243); }
+    </style>
+
+    <script>
+
+        var i = 0;
+        var listItem = " ";
+        function processInput() {
+
+            // lo que el usario escribio
+            listItem = document.getElementById("inputArticulo").value;
+
+            if (listItem == "") {
+                alert("Por favor ingrese un articulo.");
+                return;
+            }
+
+            // Agregando a la tabla
+            var tabla = document.getElementById("tablaArticulos");
+            var fila = tabla.insertRow();
+            var celda1 = fila.insertCell(0);
+            var celda2 = fila.insertCell(1);
+            celda1.innerHTML = i + 1;
+            celda2.innerHTML = listItem;
+
+            // Incrementar el contador
+            i = i + 1;
+
+            // Limpiar el texto
+            document.getElementById("inputArticulo").value = "";
+
+            // Mostrar mensaje
+            if (i == 5) {
+                document.getElementById("mensaje").innerHTML = "Gracias por ingresar los arituclos.";
+            }
+        }
+
+    </script>
+
+</head>
+<body>
+    <h1>Lista de Articulos Sugeridos</h1>
+
+    <!-- Boton de agregar -->
+    <p>Articulo: <input type="text" id="inputArticulo"></p>
+    <button id="btnAgregar">Agregar</button>
+
+    <br><br>
+
+    <!-- Tabla -->
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Articulo</th>
+            </tr>
+        </thead>
+        <tbody id="tablaArticulos">
+        </tbody>
+    </table>
+
+    <br>
+    <p id="mensaje"></p>
+
+    <br>
+
+    <!-- Boton validar navegador -->
+    <button id="testButton">Validar Navegador</button>
+
+    <script>
+        //Navegadores modernos y IE antiguo
+        var btnAgregar = document.getElementById("btnAgregar");
+        if (btnAgregar.addEventListener) {
+            btnAgregar.addEventListener("click", processInput, false);
+        } else if (btnAgregar.attachEvent) {
+            btnAgregar.attachEvent("onclick", processInput);
+        }
+
+        // Asignar evento al boton Validar Navegador
+        var btnValidar = document.getElementById("testButton");
+        if (btnValidar.addEventListener) {
+            btnValidar.addEventListener("click", checkBrowser, false);
+        } else if (btnValidar.attachEvent) {
+            btnValidar.attachEvent("onclick", checkBrowser);
+        }
+
+        // Funcion para validar compatibilidad del navegador
+        function checkBrowser() {
+            var submitButton = document.getElementById("testButton");
+            if (document.addEventListener) {
+                alert("El navegador es compatible con addEventListener (navegadores modernos).");
+            } else if (document.attachEvent) {
+                alert("El navegador utiliza attachEvent (Internet Explorer antiguo).");
+            } else {
+                alert("El navegador puede no ser totalmente compatible.");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
